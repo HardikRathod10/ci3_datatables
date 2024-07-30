@@ -7,26 +7,45 @@
     integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <!-- DataTable JS -->
 <script src="https://cdn.datatables.net/2.1.2/js/dataTables.js"></script>
+<!-- This is required to inclue button library to use datatable buttons -->
+<script src="<?php echo base_url('assets/js/datatables_button.min.js'); ?>"></script>
+
+<!-- <script src="https://cdn.datatables.net/buttons/3.1.0/js/dataTables.buttons.min.js"></script> -->
+
 
 <script>
-    $('#dataTable').DataTable({
-        // Used to set paging
-        // paging:false,
-        // scrollY:400,
-        processing: true,
-        serverSide: true,
-        ajax: {
-            url: "<?= base_url('employee/fetch_employees'); ?>",
-            type: "post",
-            dataType: "json"
-        },
-        colomns: [
-            { data: 'emp_no' },
-            { data: 'birth_date' },
-            { data: 'first_name' },
-            { data: 'last_name' },
-            { data: 'gender' }
-        ]
+    $(document).ready(function(){
+    // datatable with buttons
+        $('#example').DataTable({
+            columnDefs:[
+                {
+                'target':[0,4],
+                'ordering':false
+                }
+            ],
+            processing:true,
+            serverSide:true,
+            ajax:{
+                url:'<?php echo base_url('employee/fetch_employees'); ?>',
+                type:'post'
+            },
+            columns: [
+                { data: 'emp_no' },
+                { data: 'first_name' },
+                { data: 'last_name' },
+                { data: 'gender' },
+                { data: 'hire_date' }
+            ],
+            dom:'<<"d-flex justify-content-between"l<B>f><t><"d-flex justify-content-between"ip>>',
+            buttons: ['csv','excel','pdf']
+            // paging:{
+            //     firstLast:false,
+            //     previousNext:false
+            // },
+            // search:{
+            //     return:true
+            // }
+        });
     });
 </script>
 </body>

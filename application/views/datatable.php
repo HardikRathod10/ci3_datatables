@@ -1,6 +1,6 @@
 <?php $this->load->view("header"); ?>
 <div class="container my-4 shadow p-4">
-    <table class="table" id="dataTable">
+    <table class="table" id="example">
         <thead>
             <tr>
                 <th scope="col">#</th>
@@ -11,16 +11,13 @@
             </tr>
         </thead>
         <tbody>
-            <?php //foreach ($employees as $employee): ?>
             <tr>
-                <th scope="row"><?php //$employee->emp_no; ?></th>
-                <td><?php //$employee->first_name; ?></td>
-                <td><?php //$employee->last_name; ?></td>
-                <td><?php //$employee->gender; ?></td>
-                <td><?php //$employee->hire_date; ?></td>
+                <th scope="row"></th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
             </tr>
-            <?php //endforeach; ?>
-
         </tbody>
     </table>
 </div>

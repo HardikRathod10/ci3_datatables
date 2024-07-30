@@ -10,6 +10,7 @@ class Employee_model extends CI_Model
 
     public function get_employees()
     {
+        $this->db->limit(30);
         return $this->db->get('employee')->result();
     }
 
