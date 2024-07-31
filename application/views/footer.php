@@ -28,12 +28,14 @@
                     'target':[0,3,4],
                     'searching':false
                 },
+                // Following will provides names to columns that can be access in back end side for applying searching and filtering.
                 { name: 'emp_no', targets: 0 },
                 { name: 'first_name', targets: 1 },
                 { name: 'last_name', targets: 2 },
                 { name: 'gender', targets: 3 },
                 { name: 'hire_date', targets: 4 }
             ],
+            paging:true,
             processing:true,
             serverSide:true, //serverSide attrubute lets you to enable of disable serverSide Processing for datatable.
             // Used to send ajax request to specified end-point for data retrival with datatable cofiguration data.

@@ -51,6 +51,7 @@ class Employee extends CI_Controller
 
         $start = $this->input->post()['start'];
         $length = $this->input->post()['length'];
+        
         // With ordering
         $order_column = isset($this->input->post()['order'][0]['name'])?$this->input->post()['order'][0]['name']:"emp_no";
         $order_direction = isset($this->input->post()['order'][0]['dir'])?$this->input->post()['order'][0]['dir']:"ASC";
@@ -64,7 +65,7 @@ class Employee extends CI_Controller
         if ($search_query != '') {
             $query .= " WHERE `first_name` LIKE '%$search_query%' OR `last_name` LIKE '%$search_query%'";
         }
-        $query .= " ORDER BY `$order_column` $order_direction LIMIT {$start}, {$length}";
+        $query .= " ORDER BY `$order_column` $order_direction LIMIT {$length} OFFSET {$start}";
 
         
         $records = $this->custom_model->customQuery($query,true);
@@ -82,12 +83,11 @@ class Employee extends CI_Controller
         // print_r($data);
         $output = [
             'draw'=>$this->input->post('draw'),
-            'recordsTotal'=>$this->custom_model->getTotalCount('employee'),
             'recordsFiltered'=>count($records),
+            'recordsTotal'=>$this->custom_model->getTotalCount('employee'),
             'data'=>$data
         ];
 
         echo json_encode($output);
     }
 }
-
