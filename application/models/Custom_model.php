@@ -30,12 +30,10 @@ class Custom_model extends CI_Model
              $this->db->group_by($group_by); 
         }
         $query = $this->db->get($table);
-        if($result_type=="array")
-        {
+        if($result_type=="array"){
             return $query->result_array();
         }
-        else
-        {
+        else{
             return $query->result();    
         }
         return $query->result();
@@ -524,7 +522,6 @@ class Custom_model extends CI_Model
             $this->updateRow($table,$value,$where);
         }
     }
-
 }
 /* End of file Admin_model.php */
 /* Location: ./application/modules/admin/models/Admin_model.php */ 

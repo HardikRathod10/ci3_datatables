@@ -1,5 +1,5 @@
 <?php $this->load->view("header"); ?>
-<div class="container my-4 shadow p-4">
+<div class="container my-4 p-4">
     <table class="table" id="example">
         <thead>
             <tr>

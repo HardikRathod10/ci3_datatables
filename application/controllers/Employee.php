@@ -23,6 +23,9 @@ class Employee extends CI_Controller
     {
         // print_r($this->input->post());
         // exit;
+        
+        // print_r($this->input->post());
+        // exit;
         // $records = $this->employee_model->get_employees();
         // $data = array();
         
@@ -46,10 +49,28 @@ class Employee extends CI_Controller
 
         // echo json_encode($data);
 
-        $records = $this->custom_model->getRows('employee');
+        $start = $this->input->post()['start'];
+        $length = $this->input->post()['length'];
+        // With ordering
+        $order_column = isset($this->input->post()['order'][0]['name'])?$this->input->post()['order'][0]['name']:"emp_no";
+        $order_direction = isset($this->input->post()['order'][0]['dir'])?$this->input->post()['order'][0]['dir']:"ASC";
+
+        // $records = $this->custom_model->getRowsSorted('employee',[],[], $order_column,$order_direction,$limit=$this->input->post('length'));
+        
+        // With Searching and ordering
+        $search_query = $this->input->post()['search']['value'];
+        $query = "SELECT *
+                  FROM `employee`";
+        if ($search_query != '') {
+            $query .= " WHERE `first_name` LIKE '%$search_query%' OR `last_name` LIKE '%$search_query%'";
+        }
+        $query .= " ORDER BY `$order_column` $order_direction LIMIT {$start}, {$length}";
+
+        
+        $records = $this->custom_model->customQuery($query,true);
         
         foreach ($records as $record) {
-            $sub_arr = [];
+            $sub_arr = [];  
             $sub_arr['emp_no']=$record->emp_no;
             $sub_arr['birth_date']=$record->birth_date;
             $sub_arr['first_name']=$record->first_name;
@@ -62,9 +83,11 @@ class Employee extends CI_Controller
         $output = [
             'draw'=>$this->input->post('draw'),
             'recordsTotal'=>$this->custom_model->getTotalCount('employee'),
+            'recordsFiltered'=>count($records),
             'data'=>$data
         ];
 
         echo json_encode($output);
     }
 }
+

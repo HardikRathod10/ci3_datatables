@@ -12,7 +12,11 @@
     <!-- DataTable CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.2/css/dataTables.dataTables.min.css" />
     <!-- <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.1.0/css/buttons.dataTables.min.css" /> -->
+    <!-- jQuery CDN -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <title><?= $title; ?></title>
+
 </head>
 
 <body>
