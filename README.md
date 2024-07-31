@@ -56,13 +56,100 @@ $(document).ready(function(){
 ```
 Below are most used options:
 
-- paging: Used to enable/disable default pagination.
-- ordering: Used to enable/disable default ordering.
-- searching: Used to enable/disable default searching.
-- processing: Enable/disable the display of a 'processing' indicator when the table is being processed (e.g. a sort) for server-side processing. 
-- serverSide: Enable/disable server side processing for datatable.
-- ajax: used to sending ajax request for data.
-- length: No of records you want to dispay on datatable default is 10.
-- dom: Changing dom structure of datatable or adding extra elements to it like buttons.
-- columnDefs: Default column definitions 
-- columns
+- **paging**:
+  Used to enable/disable default pagination.
+  ```
+    $(document).ready(function(){
+        $('#example').DataTable({
+           paging: false //Will desable pagination
+        });
+    });
+  ```
+- **ordering**:
+  Used to enable/disable default ordering.
+  ```
+    $(document).ready(function(){
+        $('#example').DataTable({
+           ordering: false //Will desable ordering
+        });
+    });
+  ```
+- **searching**:
+  Used to enable/disable default searching.
+  ```
+    $(document).ready(function(){
+        $('#example').DataTable({
+           searching: false //Will desable searching
+        });
+    });
+  ```
+- **processing**:
+  Enable/disable the display of a 'processing' indicator when the table is being processed (e.g. a sort) for server-side processing.
+  ```
+    $(document).ready(function(){
+        $('#example').DataTable({
+           processing: true //Will enable processing true
+        });
+    });
+  ```
+- **serverSide**:
+  Enable/disable server side processing for datatable.
+  ```
+    $(document).ready(function(){
+        $('#example').DataTable({
+           serverSide: true //Will enable serverside processing.
+        });
+    });
+  ```
+- **ajax**:
+  Used to sending ajax request for data.
+  ```
+    $(document).ready(function(){
+        $('#example').DataTable({
+           ajax:{
+              url: <endpoing_url>
+              type: 'post'
+        });
+    });
+  ```
+- **dom**:
+  Changing dom structure of datatable or adding extra elements to it like buttons.
+  ```
+    $(document).ready(function(){
+        $('#example').DataTable({
+           dom:'<<"d-flex justify-content-between"l<B>f><t><"d-flex justify-content-between"ip>>'
+        });
+    });
+    ```
+- **columnDefs**:
+  We can specify default column definitions for different colums.
+  ```
+    $(document).ready(function(){
+        $('#example').DataTable({
+           columnDefs:[
+                // Following rule will target 0th and 4th column and apply desable ordering for that columns
+                {
+                    'target':[0,4],
+                    'ordering':false
+                },
+                {
+                    'target':[0,3,4],
+                    'searching':false
+                }
+            ]
+        });
+    });
+  ``` 
+- **columns**:
+  Same like columnDefs specifies column configurations.
+  ```
+    $(document).ready(function(){
+        $('#example').DataTable({
+           columns: [
+                { data: 'emp_no' },
+                { data: 'first_name' },
+                { data: 'last_name' }
+            ]
+        });
+    });
+   ```
