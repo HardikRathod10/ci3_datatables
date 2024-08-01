@@ -8,7 +8,7 @@
 <!-- DataTable JS -->
 <script src="https://cdn.datatables.net/2.1.2/js/dataTables.js"></script>
 <!-- This is required to inclue button library to use datatable buttons -->
-<script src="<?php //echo base_url('assets/js/datatables_button.min.js'); ?>"></script>
+<script src="<?php echo base_url('assets/js/datatables_button.min.js'); ?>"></script>
 
 <!-- <script src="https://cdn.datatables.net/buttons/2.1.1/js/buttons.bootstrap.min.js"></script> -->
 
@@ -16,12 +16,13 @@
 <script>
     $(document).ready(function () {
         // datatable with buttons
-        var empDataTable = $('#example').DataTable({
+        $('#example').DataTable({
             // Provides column definitions for table.
+            dom: '<<"d-flex justify-content-between"l<B>f><t><"d-flex justify-content-between"ip>>',
             columnDefs: [
                 // Following rule will target 0th and 4th column and apply desable ordering for that columns
                 {
-                    'target': [0, 4],
+                    'target': [0],
                     'orderable': false
                 },
                 {
@@ -44,6 +45,9 @@
                 type: 'post',
                 data: function (d) {
                     d.gender = $('#gender').val();
+                    // d.dept = $('#dept').val();
+                    d.sdate = $('#sdate').val();
+                    d.edate = $('#edate').val();
                 }
             },
             // Data that will going to display i columns
@@ -51,10 +55,12 @@
                 { data: 'emp_no' },
                 { data: 'first_name' },
                 { data: 'last_name' },
+                { data: 'birth_date' },
+                { data: 'dept_name' },
                 { data: 'gender' },
-                { data: 'hire_date' }
+                { data: 'hire_date' },
+                { data: 'action' },
             ],
-            // dom:'<<"d-flex justify-content-between"l<B>f><t><"d-flex justify-content-between"ip>>',
             buttons: ['csv', 'excel', 'pdf']
             // paging:{
             //     firstLast:false,
@@ -64,8 +70,25 @@
 
         // Redrawing datatable on changing gender in select box
         $('#gender').on('change', function () {
-            empDataTable.draw();
+            // empDataTable.draw();
+            $('#example').DataTable().ajax.reload();
         });
+
+        // Retriving employees between specified birthdate
+        $('#apply-btn').on('click', function () {
+            $('#example').DataTable().ajax.reload();
+        });
+
+        // Reseting birthdate filter
+        $('#reset-btn').on('click', function () {
+            $('#sdate').val("");
+            $('#edate').val("");
+            $('#example').DataTable().ajax.reload();
+        });
+
+        // $('#dept').on('change', function(){
+        //     $('#example').DataTable().ajax.reload();
+        // });
     });
 </script>
 </body>
