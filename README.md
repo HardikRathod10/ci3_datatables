@@ -112,6 +112,21 @@ Below are most used options:
         });
     });
   ```
+- **data**:
+  Used to specify sorce of data, we have to specify result object of database query in data attribute in serveside processing.
+  ```
+    $(document).ready(function(){
+        $('#example').DataTable({
+           ajax:{
+              url: <endpoing_url>
+              type: 'post'
+        },
+        columns: [
+             { data: 'emp_no' }, // Will display employee number at first column
+             { data: 'first_name' } // Will display first name at second column
+          ]);
+    });
+  ```
 - **dom**:
   Changing dom structure of datatable or adding extra elements to it like buttons.
   ```
@@ -153,3 +168,64 @@ Below are most used options:
         });
     });
    ```
+---
+### Server side processing:
+Datatables basically work on two modes:
+1. **Client side:** First fetch all records at client side and loads in datatable.
+2. **Server side:** Fetches records as required and then loads in datatable.
+> It is good to use client side datatable if you have small amout of data like 50 or 100 records but for large amout of dataset we have use serverside datatables.
+#### How to enable serverside processing?
+To enable serverside processing we have to set **serverSide** and **processing** as true and neet to send ajax request to url for fetching data with **ajax** attribute.
+```
+$(document).ready(function(){
+    // datatable with buttons
+        $('#example').DataTable({
+            // Provides column definitions for table.
+            columnDefs:[
+                // Following rule will target 0th and 4th column and apply desable ordering for that columns
+                {
+                    'target':[0,4],
+                    'ordering':false
+                },
+                {
+                    'target':[0,3,4],
+                    'searching':false
+                },
+                // Following will provides names to columns that can be access in back end side for applying searching and filtering.
+                { name: 'emp_no', targets: 0 },
+                { name: 'first_name', targets: 1 },
+                { name: 'last_name', targets: 2 }
+            ],
+            processing:true,
+            serverSide:true, //serverSide attrubute lets you to enable of disable serverSide Processing for datatable.
+            // Used to send ajax request to specified end-point for data retrival with datatable cofiguration data.
+            ajax:{
+                url:'<?php echo base_url('employee/fetch_employees'); ?>',
+                type:'post'
+            },
+            // Data that will going to display in columns
+            columns: [
+                { data: 'emp_no' },
+                { data: 'first_name' },
+                { data: 'last_name' }
+            ]
+        });
+    });
+```
+While processing data at serverside response must be in json format with following keys
+1. **draw** : Number of times request send for datafetching
+2. **recordsFiltered** : Count of records get filtered after query execution Without applying limit clause.
+3. **recordsTotal** : Count of total record of table.
+4. **data** : Actual records for display filtered with limit clause.
+```
+    $output = [
+        'draw' => $this->input->post('draw'),
+        'recordsFiltered' => $this->employee_model->count_filtered(),
+        'recordsTotal' => $this->employee_model->count_all(),
+        'data' => $data
+    ];
+    echo json_encode($output);
+```   
+> While doing serverside processing we have to appy limit query on seperate function and have to pass data before appling limit in recordsFiltered options. also have to apply grouping if query have grouping in recordsFiltered option.
+
+> We got some parameters about datatable like search value, order value, and many for in request type array specify in ajax we and access it with Post and Get input methos and modify our queries as per this parameters. 
