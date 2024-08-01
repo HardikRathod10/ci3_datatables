@@ -13,15 +13,16 @@ class Employee extends CI_Controller
     {
 
         $data['title'] = "Datatable";
-        $data['employees'] = $this->employee_model->get_employees();
-
+        // $data['employees'] = $this->employee_model->get_employees();
+        $data['departments']=$this->employee_model->get_departments();
         $this->load->view('datatable', $data);
 
     }
 
     public function fetch_employees()
     {
-        // echo $this->employee_model->make_query();
+        $post_data = $this->input->post();
+        // echo $this->employee_model->make_query($post_data);
         // exit;
 
         // print_r($this->input->post());
@@ -78,7 +79,8 @@ class Employee extends CI_Controller
 
         // ***** Selecting data with serching and ordering and limitation with ci3 methods. *****
         //-------------------
-        $records = $this->employee_model->get_datatable();
+        
+        $records = $this->employee_model->get_datatable($post_data);
         $data = array();
         foreach ($records as $record) {
             $sub_arr = [];
@@ -86,14 +88,17 @@ class Employee extends CI_Controller
             $sub_arr['birth_date'] = $record->birth_date;
             $sub_arr['first_name'] = $record->first_name;
             $sub_arr['last_name'] = $record->last_name;
+            $sub_arr['birth_date'] = $record->birth_date;
+            $sub_arr['dept_name'] = $record->dept_name;
             $sub_arr['gender'] = $record->gender;
             $sub_arr['hire_date'] = $record->hire_date;
+            $sub_arr['action'] = "<button class='btn btn-outline-success me-3' data-id='$record->emp_no'>Edit</button><button class='btn btn-outline-danger' data-id='$record->emp_no'>Delete</button>";
             $data[] = $sub_arr;
         }
         // print_r($data);
         $output = [
             'draw' => $this->input->post('draw'),
-            'recordsFiltered' => $this->employee_model->count_filtered(),
+            'recordsFiltered' => $this->employee_model->count_filtered($post_data),
             'recordsTotal' => $this->employee_model->count_all(),
             'data' => $data
         ];
