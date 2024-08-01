@@ -228,4 +228,14 @@ While processing data at serverside response must be in json format with followi
 ```   
 > While doing serverside processing we have to appy limit query on seperate function and have to pass data before appling limit in recordsFiltered options. also have to apply grouping if query have grouping in recordsFiltered option.
 
-> We got some parameters about datatable like search value, order value, and many for in request type array specify in ajax we and access it with Post and Get input methos and modify our queries as per this parameters. 
+> We got some parameters about datatable like search value, order value, and many more with ajax request that can be accesed by **Post** and **Get** input methos and modify our queries as per this parameters.
+> We can see it in **"payload"** section in network tab.
+
+#### Redrawing datatable on filter change:
+If you have used custom filter in datatable then on changing it we have to redraw datatable means we have to send new ajax request for new filter applied data.
+```
+ // Redrawing datatable on changing gender in select box
+$('#gender').on('change', function () {
+     $('#example').DataTable().ajax.reload();
+});
+```
