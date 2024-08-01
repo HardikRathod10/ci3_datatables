@@ -14,19 +14,19 @@
 
 
 <script>
-    $(document).ready(function(){
-    // datatable with buttons
-        $('#example').DataTable({
+    $(document).ready(function () {
+        // datatable with buttons
+        var empDataTable = $('#example').DataTable({
             // Provides column definitions for table.
-            columnDefs:[
+            columnDefs: [
                 // Following rule will target 0th and 4th column and apply desable ordering for that columns
                 {
-                    'target':[0,4],
-                    'ordering':false
+                    'target': [0, 4],
+                    'orderable': false
                 },
                 {
-                    'target':[0,3,4],
-                    'searching':false
+                    'target': [0, 3, 4],
+                    'searchable': false
                 },
                 // Following will provides names to columns that can be access in back end side for applying searching and filtering.
                 { name: 'emp_no', targets: 0 },
@@ -35,13 +35,16 @@
                 { name: 'gender', targets: 3 },
                 { name: 'hire_date', targets: 4 }
             ],
-            paging:true,
-            processing:true,
-            serverSide:true, //serverSide attrubute lets you to enable of disable serverSide Processing for datatable.
+            paging: true,
+            processing: true,
+            serverSide: true, //serverSide attrubute lets you to enable of disable serverSide Processing for datatable.
             // Used to send ajax request to specified end-point for data retrival with datatable cofiguration data.
-            ajax:{
-                url:'<?php echo base_url('employee/fetch_employees'); ?>',
-                type:'post'
+            ajax: {
+                url: '<?php echo base_url('employee/fetch_employees'); ?>',
+                type: 'post',
+                data: function (d) {
+                    d.gender = $('#gender').val();
+                }
             },
             // Data that will going to display i columns
             columns: [
@@ -52,11 +55,16 @@
                 { data: 'hire_date' }
             ],
             // dom:'<<"d-flex justify-content-between"l<B>f><t><"d-flex justify-content-between"ip>>',
-            buttons: ['csv','excel','pdf']
+            buttons: ['csv', 'excel', 'pdf']
             // paging:{
             //     firstLast:false,
             //     previousNext:false
             // }
+        });
+
+        // Redrawing datatable on changing gender in select box
+        $('#gender').on('change', function () {
+            empDataTable.draw();
         });
     });
 </script>
