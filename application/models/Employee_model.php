@@ -74,5 +74,25 @@ class Employee_model extends CI_Model
         }
         return $this->db->get()->result();
     }
+
+    // Method to count employees department wise
+    public function get_count_group_wise($table, $column)
+    {
+        return $this->db->select("{$column}, count({$column}) as count")->from("{$table}")->group_by("{$column}")->get()->result();
+        // return $this->db->group_by('gender')->get('employee')->result();
+
+    }
+
+    // Method to count employees gender wise
+    public function get_count_department_wise()
+    {
+        return $this->db->select('department.dept_name as dept, count(dept_emp.dept_no) as count')
+            ->from('employee')
+            ->join('dept_emp', 'employee.emp_no=dept_emp.emp_no', 'left')
+            ->join('department', 'department.dept_no=dept_emp.dept_no')
+            ->group_by('dept_emp.dept_no')
+            ->get()
+            ->result();
+    }
 }
 ?>

@@ -15,6 +15,8 @@ class Employee extends CI_Controller
         $data['title'] = "Datatable";
         // $data['employees'] = $this->employee_model->get_employees();
         $data['departments'] = $this->employee_model->get_departments();
+        $data['gender'] = $this->employee_model->get_count_group_wise('employee', 'gender');
+        $data['departmet_count'] = $this->employee_model->get_count_department_wise();
         $this->load->view('datatable', $data);
 
     }
@@ -22,6 +24,8 @@ class Employee extends CI_Controller
     public function fetch_employees()
     {
         $post_data = $this->input->post();
+        // print_r($post_data);
+        // exit;
         // echo $this->employee_model->make_query($post_data);
         // exit;
 
@@ -90,7 +94,7 @@ class Employee extends CI_Controller
             $sub_arr['last_name'] = $record->last_name;
             $sub_arr['birth_date'] = $record->birth_date;
             $sub_arr['dept_name'] = $record->dept_name;
-            $sub_arr['gender'] = $record->gender;
+            $sub_arr['gender'] = $record->gender === "M" ? "Male" : "Female";
             $sub_arr['hire_date'] = $record->hire_date;
             // $sub_arr['action'] = "<button class='btn btn-outline-success me-3' data-id='$record->emp_no'>Edit</button><button class='btn btn-outline-danger' data-id='$record->emp_no'>Delete</button>";
             $data[] = $sub_arr;
