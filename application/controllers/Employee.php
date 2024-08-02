@@ -14,7 +14,7 @@ class Employee extends CI_Controller
 
         $data['title'] = "Datatable";
         // $data['employees'] = $this->employee_model->get_employees();
-        $data['departments']=$this->employee_model->get_departments();
+        $data['departments'] = $this->employee_model->get_departments();
         $this->load->view('datatable', $data);
 
     }
@@ -79,7 +79,7 @@ class Employee extends CI_Controller
 
         // ***** Selecting data with serching and ordering and limitation with ci3 methods. *****
         //-------------------
-        
+
         $records = $this->employee_model->get_datatable($post_data);
         $data = array();
         foreach ($records as $record) {
@@ -92,7 +92,7 @@ class Employee extends CI_Controller
             $sub_arr['dept_name'] = $record->dept_name;
             $sub_arr['gender'] = $record->gender;
             $sub_arr['hire_date'] = $record->hire_date;
-            $sub_arr['action'] = "<button class='btn btn-outline-success me-3' data-id='$record->emp_no'>Edit</button><button class='btn btn-outline-danger' data-id='$record->emp_no'>Delete</button>";
+            // $sub_arr['action'] = "<button class='btn btn-outline-success me-3' data-id='$record->emp_no'>Edit</button><button class='btn btn-outline-danger' data-id='$record->emp_no'>Delete</button>";
             $data[] = $sub_arr;
         }
         // print_r($data);

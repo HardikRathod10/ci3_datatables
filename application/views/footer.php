@@ -15,10 +15,13 @@
 
 <script>
     $(document).ready(function () {
+        function isDateValid(date) {
+            return !isNaN(new Date(date));
+        }
         // datatable with buttons
         $('#example').DataTable({
             // Provides column definitions for table.
-            dom: '<<"d-flex justify-content-between"l<B>f><t><"d-flex justify-content-between"ip>>',
+            dom: '<<"d-flex justify-content-between"<l><f>><t><"d-flex justify-content-between"i<"pagination pagination-sm"p>>>',
             columnDefs: [
                 // Following rule will target 0th and 4th column and apply desable ordering for that columns
                 {
@@ -45,9 +48,9 @@
                 type: 'post',
                 data: function (d) {
                     d.gender = $('#gender').val();
-                    // d.dept = $('#dept').val();
                     d.sdate = $('#sdate').val();
                     d.edate = $('#edate').val();
+                    d.dept = $('#department').val();
                 }
             },
             // Data that will going to display i columns
@@ -59,9 +62,9 @@
                 { data: 'dept_name' },
                 { data: 'gender' },
                 { data: 'hire_date' },
-                { data: 'action' },
+                // { data: 'action' },
             ],
-            buttons: ['csv', 'excel', 'pdf']
+            // buttons: ['csv', 'excel', 'pdf']
             // paging:{
             //     firstLast:false,
             //     previousNext:false
@@ -89,6 +92,37 @@
         // $('#dept').on('change', function(){
         //     $('#example').DataTable().ajax.reload();
         // });
+
+        $('#sdate').on('change', function () {
+            // If end date is disable then it will enable it.
+            if ($('#edate').is(":disabled")) {
+                $('#edate').prop('disabled', false);
+            }
+            // If end date is enabled and valid date is there then it will send ajax for data new data retrival.
+            else if (!($('#edate').is(":disabled")) && isDateValid($('#edate').val())) {
+                $('#example').DataTable().ajax.reload();
+            }
+            else {
+                alert("Please select end date.");
+            }
+        });
+
+        $('#edate').on('change', function () {
+            $('#example').DataTable().ajax.reload();
+        });
+
+        $('#department').on('change', function () {
+            $('#example').DataTable().ajax.reload();
+        });
+
+        // Resetting all filters
+        $('#reset-filters-btn').on('click', function () {
+            $('#gender').val("");
+            $('#sdate').val("");
+            $('#edate').val("");
+            $('#department').val("");
+            $("#example").DataTable().ajax.reload();
+        });
     });
 </script>
 </body>
