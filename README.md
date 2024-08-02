@@ -11,9 +11,10 @@ Step-1. Add datatable css and javascirpt files to your view.
 > You muse also have included jquery files.
 
 Step-2. Create structure of table in view file where you want to display table and give unique id to it to identify it for datatable.
+> While working with datatable we must have ```<thead></thead>``` in table, ```<tbody>``` not required
 ```
 <table class="table" id="example">
-        <thead>
+        <thead> // Required
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">First Name</th>
@@ -22,9 +23,9 @@ Step-2. Create structure of table in view file where you want to display table a
                 <th scope="col">Hide Data</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody> // Optional
             <tr>
-                <th scope="row"></th>
+                <th></th>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -168,6 +169,7 @@ Below are most used options:
         });
     });
    ```
+  You can explore more options from [Here](https://datatables.net/reference/option/)
 ---
 ### Server side processing:
 Datatables basically work on two modes:
@@ -175,7 +177,7 @@ Datatables basically work on two modes:
 2. **Server side:** Fetches records as required and then loads in datatable.
 > It is good to use client side datatable if you have small amout of data like 50 or 100 records but for large amout of dataset we have use serverside datatables.
 #### How to enable serverside processing?
-To enable serverside processing we have to set **serverSide** and **processing** as true and neet to send ajax request to url for fetching data with **ajax** attribute.
+To enable serverside processing we have to set **serverSide** and **processing** option as true and neet to send ajax request to url for fetching data with **ajax** attribute.
 ```
 $(document).ready(function(){
     // datatable with buttons
@@ -226,9 +228,9 @@ While processing data at serverside response must be in json format with followi
     ];
     echo json_encode($output);
 ```   
-> While doing serverside processing we have to appy limit query on seperate function and have to pass data before appling limit in recordsFiltered options. also have to apply grouping if query have grouping in recordsFiltered option.
+> While workin with serverside processing we have don and have to pass data before appling limit in recordsFiltered options. also have to apply grouping if query have grouping in recordsFiltered option.
 
-> We got some parameters about datatable like search value, order value, and many more with ajax request that can be accesed by **Post** and **Get** input methos and modify our queries as per this parameters.
+> We got some parameters about datatable like search value, order value, and many more with ajax request that can be accesed by **Post** and **Get** input methos and we can modify our queries as per this parameters.
 > We can see it in **"payload"** section in network tab.
 
 #### Redrawing datatable on filter change:
